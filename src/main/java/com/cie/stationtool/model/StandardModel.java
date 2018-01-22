@@ -2,22 +2,22 @@ package com.cie.stationtool.model;
 
 public class StandardModel {
 
-    private String DeviceType;
+    private String deviceType;
     private String cateId;
-    private String cate_name;
+    private String cateName;
     private String Requirement;
-    private String cate_desc;
+    private String cateDesc;
     private String pointClass;
     private String pointUnit;
     private String displayGroup1;
     private String displayGroup2;
 
-    public String getDeviceType() {
-        return DeviceType;
+    public String getdeviceType() {
+        return deviceType;
     }
 
     public void setDeviceType(String deviceType) {
-        DeviceType = deviceType;
+        deviceType = deviceType;
     }
 
     public String getCateId() {
@@ -28,12 +28,12 @@ public class StandardModel {
         this.cateId = cateId;
     }
 
-    public String getCate_name() {
-        return cate_name;
+    public String getCateName() {
+        return cateName;
     }
 
-    public void setCate_name(String cate_name) {
-        this.cate_name = cate_name;
+    public void setCateName(String cateName) {
+        this.cateName = cateName;
     }
 
     public String getRequirement() {
@@ -44,12 +44,12 @@ public class StandardModel {
         Requirement = requirement;
     }
 
-    public String getCate_desc() {
-        return cate_desc;
+    public String getCateDesc() {
+        return cateDesc;
     }
 
-    public void setCate_desc(String cate_desc) {
-        this.cate_desc = cate_desc;
+    public void setCateDesc(String cateDesc) {
+        this.cateDesc = cateDesc;
     }
 
     public String getPointClass() {

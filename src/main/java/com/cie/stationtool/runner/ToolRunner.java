@@ -1,6 +1,6 @@
 package com.cie.stationtool.runner;
 
-import com.cie.stationtool.builder.ToolBuilder;
+import com.cie.stationtool.builder.FileBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,19 +14,17 @@ public class ToolRunner implements ApplicationRunner{
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
-    private ToolBuilder builder;
+    private FileBuilder builder;
 
     @Override
     public void run(ApplicationArguments applicationArguments) throws Exception {
-        if(!this.builder.init()) {
-            this.logger.error("tool builder init error, please check files.");
-            return;
-        }
-        if(this.builder.building()) {
+
+        if(this.builder.execute()) {
             logger.info("build file succeed .");
         } else {
             logger.error("build file failed .");
         }
+        return ;
     }
 
 }

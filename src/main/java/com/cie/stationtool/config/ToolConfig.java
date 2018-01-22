@@ -1,40 +1,73 @@
 package com.cie.stationtool.config;
 
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
+import java.util.Map;
+
 @Component
-@ConfigurationProperties(prefix = "file")
+@ConfigurationProperties(prefix = "tool")
 public class ToolConfig {
 
-    private String config;
+    private String ruleFile;
 
-    private String target;
+    private Map<String, String> ruleMapper;
 
-    private String standard;
+    private String targetFile;
 
-    public String getStandard() {
-        return standard;
+    private Map<String, String>  targetMapper;
+
+    private String standardFile;
+
+    private Map<String, String> standardMapper;
+
+    public String getRuleFile() {
+        return ruleFile;
     }
 
-    public void setStandard(String standard) {
-        this.standard = standard;
+    public void setRuleFile(String ruleFile) {
+        this.ruleFile = ruleFile;
     }
 
-    public String getConfig() {
-        return config;
+    public String getTargetFile() {
+        return targetFile;
     }
 
-    public void setConfig(String config) {
-        this.config = config;
+    public void setTargetFile(String targetFile) {
+        this.targetFile = targetFile;
     }
 
-    public String getTarget() {
-        return target;
+    public String getStandardFile() {
+        return standardFile;
     }
 
-    public void setTarget(String target) {
-        this.target = target;
+    public void setStandardFile(String standardFile) {
+        this.standardFile = standardFile;
+    }
+
+    public Map<String, String> getRuleMapper() {
+        return ruleMapper;
+    }
+
+    public void setRuleMapper(Map<String, String> ruleMapper) {
+        this.ruleMapper = ruleMapper;
+    }
+
+    public Map<String, String> getTargetMapper() {
+        return targetMapper;
+    }
+
+    public void setTargetMapper(Map<String, String> targetMapper) {
+        this.targetMapper = targetMapper;
+    }
+
+    public Map<String, String> getStandardMapper() {
+        return standardMapper;
+    }
+
+    public void setStandardMapper(Map<String, String> standardMapper) {
+        this.standardMapper = standardMapper;
     }
 }

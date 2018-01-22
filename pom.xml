@@ -4,11 +4,11 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.cie</groupId>
-	<artifactId>util-config</artifactId>
+	<artifactId>station-tool</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
-	<name>util-config</name>
+	<name>station-tool</name>
 	<description>station config tool</description>
 
 	<parent>
@@ -26,12 +26,22 @@
 
 	<dependencies>
 		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>fastjson</artifactId>
+			<version>1.2.41</version>
+		</dependency>
+		<dependency>
 			<groupId>com.cie.framework</groupId>
 			<artifactId>cie-expands-excel</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>com.cie.framework</groupId>
 			<artifactId>cie-utils</artifactId>
+			<version>1.0-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-configuration-processor</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>

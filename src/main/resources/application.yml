@@ -1,5 +1,39 @@
 
-file:
-  config: "±ê×¼²âµã.xlsx"
-  target: "00147.xlsx"
+tool:
+  ruleFile: "rule.xlsx"
+  ruleMapper:
+    device_type: "deviceType"
+    point_name: "pointName"
+    sys_cate_id: "sysCateId"
+  targetFile: "target.xlsx"
+  targetMapper:
+    device_type: "deviceType"
+    point_class: "pointClass"
+    cate_id: "cateId"
+    old_cate_id:  "oldCateId"
+    point_name:  "pointName"
+    sys_cate_id:  "sysCateId"
+    to_sys_cate_id:  "toSysCateId"
+    display_group1:  "displayGroup1"
+    display-group2:  "displayGroup2"
+    display_order1:  "displayOrder1"
+    display_order2:  "displayOrder2"
+    display_order3:  "displayOrder3"
+    is_display:  "isDisplay"
+    num:  "num"
+  standardFile: "standard.xlsx"
+  standardMapper:
+    device_type: "deviceType"
+    cate_id:  "cateId"
+    cate_name: "cateName"
+    requirement: "requirement"
+    cate_desc: "cateDesc"
+    point_class:  "pointClass"
+    point_cnit: "pointUnit"
+    display_group1: "displayGroup1"
+    display-group2: "displayGroup2"
+
+
+
+
 
