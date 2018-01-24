@@ -5,7 +5,6 @@ import com.cie.expands.excel.ExcelIO;
 import com.cie.expands.excel.config.Header;
 import com.cie.stationtool.config.ToolConfig;
 import com.cie.stationtool.model.RuleModel;
-import com.cie.stationtool.model.StandardModel;
 import com.cie.stationtool.model.TargetModel;
 import com.cie.utils.file.FileUtils;
 import org.slf4j.Logger;
@@ -17,7 +16,9 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Component
 public class FileBuilder{
@@ -27,9 +28,7 @@ public class FileBuilder{
     @Autowired
     private ToolConfig toolConfig;
 
-    private List<StandardModel> standards;
-
-        private List<TargetModel> targets;
+    private List<TargetModel> targets;
 
     private List<RuleModel> rules;
 
@@ -37,20 +36,13 @@ public class FileBuilder{
         int step = 1;
         try {
             rules  = ExcelIO.read2Bean(FileUtils.getResourceAsStream(toolConfig.getRuleFile()), toolConfig.getRuleMapper(), RuleModel.class);
-           // this.logger.info("加载rule文件成功:{}.", JSONObject.toJSONString(this.rules));
             ++ step;
             targets = ExcelIO.read2Bean(FileUtils.getResourceAsStream(toolConfig.getTargetFile()), toolConfig.getTargetMapper(), TargetModel.class);
-           // this.logger.info("加载target文件成功:{}.", JSONObject.toJSONString(this.targets));
-            ++ step;
-            standards = ExcelIO.read2Bean(FileUtils.getResourceAsStream(toolConfig.getStandardFile()), toolConfig.getStandardMapper(), StandardModel.class);
-           // this.logger.info("加载standard文件成功:{}.", JSONObject.toJSONString(this.standards));
         } catch (Exception e) {
             if(step == 1 )
                 this.logger.error("读入rule文件失败...");
-            else if(step == 2)
-                this.logger.error("读取target文件失败...");
             else
-                this.logger.error("读取standard文件失败...");
+                this.logger.error("读取target文件失败...");
             this.logger.error(e.getMessage());
             return false;
         }
@@ -58,13 +50,35 @@ public class FileBuilder{
     }
 
     private void building() {
-        for(TargetModel targetModel: targets) {
-            for (RuleModel ruleModel : rules) {
-                if (targetModel.getPointName().equals(ruleModel.getPointName())) {
-                    targetModel.setToSysCateId(ruleModel.getSysCateId());
-                }
+        Map<String, List<RuleModel>> ruleMap = new HashMap<>();
+        for(RuleModel r: this.rules) {
+            if(ruleMap.get(r.getDeviceType()) != null) {
+               ruleMap.get(r.getDeviceType()).add(r);
+            } else {
+                List<RuleModel> newList = new ArrayList<>();
+                newList.add(r);
+                ruleMap.put(r.getDeviceType(), newList);
             }
         }
+        this.logger.info("ruleMap.size = {}",ruleMap.size());
+        this.logger.info("ruleMap.keys = {}", JSONObject.toJSONString(ruleMap.keySet()));
+        logger.info("开始匹配, 总数为:{}", targets.size());
+        int count = 0;
+        for(TargetModel targetModel: targets) {
+            if(ruleMap.get(targetModel.getDeviceType()) != null) {
+                for (RuleModel ruleModel : ruleMap.get(targetModel.getDeviceType())) {
+                    if (this.compareTo(targetModel.getPointName(), ruleModel.getPointName())) {
+                        targetModel.setToSysCateId(ruleModel.getSysCateId());
+                        this.logger.info("匹配成功 {}->{} ->{}", targetModel.getPointName(), ruleModel.getPointName() , ruleModel.getSysCateId());
+                        count++;
+                        break;
+                    }
+                }
+            }else  {
+                this.logger.debug("Device Type 不存在: {}", targetModel.getDeviceType());
+            }
+        }
+        logger.info("匹配结束, 成功个数为:{}", count);
     }
 
     private boolean save(){
@@ -91,11 +105,19 @@ public class FileBuilder{
         return true;
     }
 
+    private boolean compareTo(String target, String rule) {
+        if(target.contains(rule))
+            return true;
+        if(rule.contains(target))
+            return  true;
+        return false;
+    }
+
     public boolean execute() {
         if(!this.loadFile()) {
             return false;
         }
-        building();
+        this.building();
         if(!this.save()) {
             return false;
         }

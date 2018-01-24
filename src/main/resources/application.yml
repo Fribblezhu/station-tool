@@ -32,6 +32,9 @@ tool:
     point_cnit: "pointUnit"
     display_group1: "displayGroup1"
     display-group2: "displayGroup2"
+logging:
+  file: tool.log
+  level: info
 
 
 
